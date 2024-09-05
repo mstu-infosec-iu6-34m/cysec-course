@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Emojis - Buy Your Favorite!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        .building {
+            font-size: 5em;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .building:hover {
+            transform: scale(1.2);
+        }
+        form {
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1.2em;
+            margin: 5px;
+        }
+        .reviews {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #ccc;
+        }
+        .review {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pick Your Favorite Building 🏠</h1>
+
+    <div>
+        {% for building in buildings %}
+            <span class="building">{{ building }}</span>
+        {% endfor %}
+    </div>
+
+    <form action="/" method="POST">
+        <h2>Place Your Order</h2>
+        <label for="building_type">Choose Building:</label>
+        <select name="building_type" id="building_type">
+            {% for building in buildings %}
+                <option value="{{ building }}">{{ building }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" min="1" max="100" value="1">
+        <br>
+        <button type="submit">Order Now</button>
+    </form>
+
+    <div class="reviews">
+        <h2>Customer Reviews</h2>
+        {% for review in reviews %}
+            <div class="review">{{ review.content|safe }}</div> <!-- Note the use of the "safe" filter -->
+        {% endfor %}
+    </div>
+
+    <form action="/review" method="POST">
+        <h2>Leave a Review</h2>
+        <textarea name="review" rows="4" cols="50" placeholder="Your review here..."></textarea>
+        <br>
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+</html>
